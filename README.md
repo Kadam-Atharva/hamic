@@ -1,7 +1,7 @@
 # HAMIC — Intelligent Product Support & Hybrid Diagnostic System
 
-**Team Name**: _[Insert Team Name]_  
-**Team Members**: _[Insert Team Members]_
+**Team Name**: _TechNova_  
+**Team Members**: _Atharva Kadam_
 
 Hamic is an intelligent, high-performance product support and troubleshooting platform designed to bridge the gap between complex industrial or consumer hardware manuals and human-friendly diagnostic resolutions.
 
