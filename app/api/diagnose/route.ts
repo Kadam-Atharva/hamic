@@ -92,8 +92,10 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       session: {
+        ...session,
         ...updatedSession,
-        ...updateData // ensure latest is returned
+        ...updateData, // ensure latest is returned
+        _id: session._id ? session._id.toString() : (updatedSession?._id ? updatedSession._id.toString() : null)
       }
     });
   } catch (error: any) {

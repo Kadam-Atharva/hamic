@@ -178,6 +178,7 @@ export async function connectDB() {
   try {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
     };
     await mongoose.connect(MONGODB_URI, opts);
     isConnected = true;
