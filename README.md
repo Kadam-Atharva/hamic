@@ -79,6 +79,8 @@ When a user types a symptom (e.g., _"air conditioner blowing hot air"_), Hamic q
 Once the troubleshooting assistant isolates the root cause (e.g., _"unbalanced load"_ or _"refrigerant leak"_), Moss semantic query searches the parts catalog. It retrieves highly relevant tools (like a multimeter or socket wrench) and spare parts (like a drive belt or HEPA filter) matching the isolated cause and links them directly to the storefront.
 
 ---
+<img width="1278" height="646" alt="Screenshot 2026-06-15 180919" src="https://github.com/user-attachments/assets/fe4bb956-ab38-4410-98ae-8beb79934415" />
+
 
 ## ⚙️ Setup and Installation Instructions
 
