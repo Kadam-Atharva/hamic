@@ -2,7 +2,7 @@
 
 **Team Name**: _TechNova_  
 **Team Members**: _Atharva Kadam_  
-**Live Application**: [https://hamic.vercel.app/](https://hamic.vercel.app/)
+**Live Application**: [https://hamic-black.vercel.app/](https://hamic-black.vercel.app/)
 
 Hamic is an intelligent, high-performance product support and troubleshooting platform designed to bridge the gap between complex industrial or consumer hardware manuals and human-friendly diagnostic resolutions.
 
