@@ -1,0 +1,100 @@
+{
+  "accounts": [
+    {
+      "_id": "0a9cabb2-264b-469a-aac3-d88e589bc770",
+      "name": "Atharva Kadam",
+      "email": "atharva@mail.com",
+      "passwordHash": "$2b$10$eg1LIuR/MGtd50G3pW0rweB4NqT4pHPsmmppMg4EYKjBa1f5lNpN.",
+      "role": "user",
+      "createdAt": "2026-06-14T07:22:00.768Z"
+    },
+    {
+      "_id": "650000000000000000000005",
+      "name": "Acme Appliances Inc.",
+      "email": "company@hamic.com",
+      "passwordHash": "$2b$10$PinNU2.kqBJK8KURs4jxUu746/hCIIwzjM3q9Aowuku2ylhXoF7Zy",
+      "role": "company",
+      "companyDetails": {
+        "description": "Leading manufacturer of high-quality household cooling systems and washing machines.",
+        "website": "https://acme-appliances.example.com",
+        "logoUrl": ""
+      }
+    },
+    {
+      "_id": "650000000000000000000006",
+      "name": "John Doe",
+      "email": "user@hamic.com",
+      "passwordHash": "$2b$10$TNFFi6kOj.7VwV85Jj2KPOkxYTLALr2CZomhNTfu7ZE6Cs0LGyHfu",
+      "role": "user"
+    }
+  ],
+  "products": [
+    {
+      "_id": "650000000000000000000001",
+      "companyId": "650000000000000000000005",
+      "name": "Acme Air Conditioner",
+      "category": "Air Conditioners",
+      "description": "High-efficiency split-system air conditioner with smart temperature control and eco-friendly cooling.",
+      "imageUrl": "",
+      "specs": [
+        {
+          "label": "Cooling Capacity",
+          "value": "12,000 BTU"
+        },
+        {
+          "label": "Energy Rating",
+          "value": "5 Star"
+        },
+        {
+          "label": "Refrigerant",
+          "value": "R410A"
+        }
+      ],
+      "createdAt": "2026-06-15T04:11:47.245Z"
+    },
+    {
+      "_id": "650000000000000000000003",
+      "companyId": "650000000000000000000005",
+      "name": "WashMaster Pro",
+      "category": "Washing Machines",
+      "description": "Heavy-duty front load washing machine with multi-cycle wash, noise reduction, and smart load sensing.",
+      "imageUrl": "",
+      "specs": [
+        {
+          "label": "Drum Capacity",
+          "value": "9.0 Kg"
+        },
+        {
+          "label": "Max Spin Speed",
+          "value": "1400 RPM"
+        },
+        {
+          "label": "Motor Type",
+          "value": "Direct Drive"
+        }
+      ],
+      "createdAt": "2026-06-15T04:11:47.245Z"
+    }
+  ],
+  "supportmaterials": [
+    {
+      "_id": "650000000000000000000002",
+      "productId": "650000000000000000000001",
+      "title": "Acme Split AC User Manual & Troubleshooting Guide",
+      "type": "text",
+      "rawText": "Acme Split Air Conditioner Manual.\nSafety Instructions: Always disconnect power before checking electrical parts.\nTo resolve cooling issues:\n- Check if the thermostat is set to 'Cool' and target temperature is below room temperature.\n- A dirty or clogged air filter restricts air flow and degrades cooling performance. Clean or replace the HEPA air filter every 3 months.\n- If the outdoor unit fan is not spinning or humming, the condenser motor might be faulty.\n- Evaporator coil freezing and ice formation on indoor copper tubes is caused by low refrigerant levels (refrigerant leak).",
+      "createdAt": "2026-06-15T04:11:47.245Z"
+    },
+    {
+      "_id": "650000000000000000000004",
+      "productId": "650000000000000000000003",
+      "title": "WashMaster Pro Front Load Washer Owner Manual",
+      "type": "text",
+      "rawText": "WashMaster Pro Front Load Washing Machine Support Manual.\nSafety Warning: Always unplug the washing machine from the outlet before performing physical repairs.\nDiagnostic Checklist:\n- Severe vibration or stopping mid-cycle is usually caused by an unbalanced load. Ensure clothes are distributed evenly.\n- If the washer refuses to start or spin, the lid switch or door lock actuator assembly might be broken or not acknowledging door closure.\n- Water remaining in the drum that is failing to drain out indicates a drain pump clog or pump assembly motor failure.\n- If the motor hums but the drum does not rotate when turned by hand, the drum drive belt might be broken or slipped off.",
+      "createdAt": "2026-06-15T04:11:47.245Z"
+    }
+  ],
+  "diagnosticsessions": [],
+  "ownedproducts": [],
+  "maintenancetasks": []
+}

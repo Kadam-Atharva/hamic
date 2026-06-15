@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #09090b; /* Zinc 950 */
+  --foreground: #f4f4f5; /* Zinc 100 */
+  --accent-cyan: #06b6d4; /* Cyan 500 */
+  --accent-emerald: #10b981; /* Emerald 500 */
+  --accent-violet: #8b5cf6; /* Violet 500 */
+  --card-bg: rgba(24, 24, 27, 0.7); /* Zinc 900 at 0.7 opacity */
+  --border-color: rgba(63, 63, 70, 0.4); /* Zinc 700 at 0.4 opacity */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: rgba(18, 18, 24, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(63, 63, 70, 0.3);
+}
+
+.glass-card {
+  background: rgba(24, 24, 27, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(63, 63, 70, 0.2);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Glowing Elements */
+.glow-cyan {
+  box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.3);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.3);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+}
+
+/* Animations */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-slow 8s infinite ease-in-out;
+}
+
+/* Custom styling for status dots */
+.status-pulse {
+  position: relative;
+}
+
+.status-pulse::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: currentColor;
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  opacity: 0.75;
 }
