@@ -26,6 +26,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, products });
   } catch (error: any) {
+    if (error.digest === 'NEXT_PRERENDER_INTERRUPTED') {
+      throw error;
+    }
     console.error('Fetch products error:', error);
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
   }

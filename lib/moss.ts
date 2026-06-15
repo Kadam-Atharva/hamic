@@ -1,21 +1,27 @@
-import { MossClient } from "@moss-dev/moss";
 import { dbModel } from "./db";
 
-const PROJECT_ID = process.env.MOSS_PROJECT_ID;
-const PROJECT_KEY = process.env.MOSS_PROJECT_KEY;
 const INDEX_NAME = "hamic-support-docs";
 
-let mossClient: MossClient | null = null;
+let mossClient: any = null;
+let mossClientInitialized = false;
 
-if (PROJECT_ID && PROJECT_KEY) {
-  try {
-    mossClient = new MossClient(PROJECT_ID, PROJECT_KEY);
-    console.log("✅ Moss Search Client initialized successfully.");
-  } catch (error) {
-    console.error("❌ Failed to initialize Moss Search Client:", error);
+async function getMossClient() {
+  if (mossClientInitialized) return mossClient;
+
+  const PROJECT_ID = process.env.MOSS_PROJECT_ID;
+  const PROJECT_KEY = process.env.MOSS_PROJECT_KEY;
+
+  if (PROJECT_ID && PROJECT_KEY) {
+    try {
+      const { MossClient } = await import("@moss-dev/moss");
+      mossClient = new MossClient(PROJECT_ID, PROJECT_KEY);
+      console.log("✅ Moss Search Client initialized successfully.");
+    } catch (error) {
+      console.error("❌ Failed to initialize Moss Search Client:", error);
+    }
   }
-} else {
-  console.log("ℹ️ Moss Search: MOSS_PROJECT_ID or MOSS_PROJECT_KEY missing. Running in database fallback mode.");
+  mossClientInitialized = true;
+  return mossClient;
 }
 
 export interface SearchResult {
@@ -30,7 +36,8 @@ export interface SearchResult {
  * Indexes all support materials for a product or updates the global Moss index
  */
 export async function syncMossIndex(): Promise<boolean> {
-  if (!mossClient) return false;
+  const client = await getMossClient();
+  if (!client) return false;
 
   try {
     // Fetch all text materials from database
@@ -50,8 +57,8 @@ export async function syncMossIndex(): Promise<boolean> {
     }
 
     console.log(`🌱 Moss Sync: Indexing ${docs.length} support materials...`);
-    await mossClient.createIndex(INDEX_NAME, docs);
-    await mossClient.loadIndex(INDEX_NAME);
+    await client.createIndex(INDEX_NAME, docs);
+    await client.loadIndex(INDEX_NAME);
     console.log("✅ Moss Sync: Indexing completed successfully.");
     return true;
   } catch (error) {
@@ -70,11 +77,12 @@ export async function searchDocumentation(
   topK: number = 3
 ): Promise<SearchResult[]> {
   // If Moss is active, load and run query
-  if (mossClient) {
+  const client = await getMossClient();
+  if (client) {
     try {
       // Lazy load/sync if index is not loaded (or ensure loaded)
-      await mossClient.loadIndex(INDEX_NAME);
-      const results = await mossClient.query(INDEX_NAME, query, { topK });
+      await client.loadIndex(INDEX_NAME);
+      const results = await client.query(INDEX_NAME, query, { topK });
       
       const matchedResults: SearchResult[] = [];
       for (const doc of results.docs) {

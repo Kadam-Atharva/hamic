@@ -1,19 +1,26 @@
-import { MossClient } from "@moss-dev/moss";
-
-const PROJECT_ID = process.env.MOSS_PROJECT_ID;
-const PROJECT_KEY = process.env.MOSS_PROJECT_KEY;
 const INDEX_NAME = "hamic-spare-parts";
 
-let mossClient: MossClient | null = null;
+let mossClient: any = null;
+let mossClientInitialized = false;
 let indexInitialized = false;
 
-if (PROJECT_ID && PROJECT_KEY) {
-  try {
-    mossClient = new MossClient(PROJECT_ID, PROJECT_KEY);
-    console.log("✅ Moss Spare Parts Client initialized successfully.");
-  } catch (error) {
-    console.error("❌ Failed to initialize Moss Spare Parts Client:", error);
+async function getMossClient() {
+  if (mossClientInitialized) return mossClient;
+
+  const PROJECT_ID = process.env.MOSS_PROJECT_ID;
+  const PROJECT_KEY = process.env.MOSS_PROJECT_KEY;
+
+  if (PROJECT_ID && PROJECT_KEY) {
+    try {
+      const { MossClient } = await import("@moss-dev/moss");
+      mossClient = new MossClient(PROJECT_ID, PROJECT_KEY);
+      console.log("✅ Moss Spare Parts Client initialized successfully.");
+    } catch (error) {
+      console.error("❌ Failed to initialize Moss Spare Parts Client:", error);
+    }
   }
+  mossClientInitialized = true;
+  return mossClient;
 }
 
 export interface SparePart {
@@ -53,14 +60,15 @@ let indexFailed = false;
  * Initializes and seeds the Moss spare parts index
  */
 async function ensureIndexReady() {
-  if (!mossClient || indexInitialized || indexFailed) return;
+  const client = await getMossClient();
+  if (!client || indexInitialized || indexFailed) return;
   try {
     const docs = PARTS_CATALOG.map(p => ({
       id: p.id,
       text: `${p.name} (${p.type}). Category: ${p.category}. Description: ${p.text}`
     }));
-    await mossClient.createIndex(INDEX_NAME, docs);
-    await mossClient.loadIndex(INDEX_NAME);
+    await client.createIndex(INDEX_NAME, docs);
+    await client.loadIndex(INDEX_NAME);
     indexInitialized = true;
     console.log("✅ Moss Spare Parts: Catalog index seeded and loaded successfully.");
   } catch (error) {
@@ -94,11 +102,12 @@ export async function searchSpareParts(
   }
 
   // If Moss is active, query semantically
-  if (mossClient && !indexFailed) {
+  const client = await getMossClient();
+  if (client && !indexFailed) {
     try {
       await ensureIndexReady();
       if (indexInitialized) {
-        const results = await mossClient.query(INDEX_NAME, query, { topK: 5 });
+        const results = await client.query(INDEX_NAME, query, { topK: 5 });
         
         const parts: SparePart[] = [];
         for (const doc of results.docs) {

@@ -20,6 +20,9 @@ export async function GET(request: Request) {
       latencyMs: latency
     });
   } catch (error: any) {
+    if (error.digest === 'NEXT_PRERENDER_INTERRUPTED') {
+      throw error;
+    }
     console.error('Spare parts search API error:', error);
     return NextResponse.json({ error: 'Failed to search spare parts' }, { status: 500 });
   }
